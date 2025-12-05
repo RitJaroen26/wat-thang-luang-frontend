@@ -12,7 +12,7 @@ export default function HomeSection() {
         "/images/LINE_ALBUM_21268_251203_3.jpg",
         "/images/LINE_ALBUM_21268_251203_4.jpg",
         "/images/LINE_ALBUM_21268_251203_5.jpg",
-        "/images/LINE_ALBUM_21268_251203_9.jpg"
+        "/images/LINE_ALBUM_21268_251203_8.jpg"
     ];
 
     useEffect(() => {
@@ -55,7 +55,7 @@ export default function HomeSection() {
                     วัดทางหลวง
                 </p>
 
-                <div className="flex items-center justify-center gap-8 mt-6 border-t border-white/60 pt-4">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-8 mt-6 border-t border-white/60 pt-4">
                     <div className="flex items-center gap-2">
                         <span><img src="/images/calendar_image.svg" alt="" /></span>
                         <p className="animate-fadeIn [text-shadow:0_0_4px_black] animation-delay-300">เปิด <span className="text-amber-300">08.00–12.00 น.</span></p>

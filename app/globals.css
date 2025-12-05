@@ -50,3 +50,45 @@
     transform: translateY(0);
   }
 }
+
+.bg-fixed {
+  background-attachment: fixed;
+}
+
+/* ใส่ในไฟล์ CSS หลักของคุณ เช่น globals.css */
+
+/* 1. ปรับขนาดปุ่ม Prev/Next ( <, >, Today) */
+/* .fc-toolbar-chunk: target ส่วนย่อยของ toolbar เช่น left, center, right */
+.fc .fc-toolbar-chunk .fc-button-group > button {
+    /* ปรับขนาดฟอนต์ */
+    font-size: 0.8rem !important;
+    /* ปรับ Padding เพื่อลดขนาดปุ่ม */
+    padding: 0.35rem 0.65rem !important;
+    /* ปรับขอบโค้งมน */
+    /* border-radius: 0.5rem !important;  */
+}
+
+/* 2. ปรับขนาดชื่อเดือน/ชื่อปฏิทิน (Title) */
+.fc .fc-toolbar-title {
+    /* ปรับขนาดฟอนต์ของเดือน/ปี */
+    font-size: 20px; /* ปรับจากค่า default ที่ใหญ่กว่า */
+    font-weight: 600;
+}
+
+/* 3. ปรับขนาดปุ่มมุมมอง (Month, Week, Day) */
+/* .fc-toolbar-chunk: target ปุ่มมุมมองที่อยู่ทางขวา */
+.fc .fc-button-group .fc-button {
+    /* ใช้ขนาดฟอนต์เดียวกับปุ่ม Prev/Next เพื่อความสม่ำเสมอ */
+    font-size: 0.8rem !important;
+    padding: 0.35rem 0.65rem !important;
+}
+
+/* 4. ปรับขนาดฟอนต์ของชื่อวันในสัปดาห์ (Mon, Tue, Wed...) */
+.fc-daygrid-body .fc-col-header-cell-cushion {
+    font-size: 0.85rem !important;
+}
+
+/* 5. ปรับขนาดฟอนต์ของเลขวันที่ในช่องตาราง (ตัวเลข) */
+.fc-daygrid-day-number {
+    font-size: 0.8rem !important;
+}

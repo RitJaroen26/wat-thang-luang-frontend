@@ -6,10 +6,24 @@ import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import Image from "next/image";
 
+type DesktopMenuItem = {
+    label: string;
+    goto?: string;
+    section?: string;
+};
+
+type MobileMenu = {
+    key?: string;
+    label: string;
+    action?: () => void;
+    items?: string[];
+};
+
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isVisibled, setIsVisibled] = useState(true);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+    const [isMobileOpen, setIsMobileOpen] = useState(false);
 
     const lastScrollY = useRef(0);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -17,9 +31,50 @@ export default function Navbar() {
     const router = useRouter();
     const pathname = usePathname();
 
+    const mobileMenu: MobileMenu[] = [
+        { label: "หน้าแรก", action: () => router.push("/") },
+        {
+            key: "about",
+            label: "เกี่ยวกับเรา",
+            items: ["ประวัติศูนย์", "วิสัยทัศน์", "โครงสร้างองค์กร", "บุคลากร"]
+        },
+        {
+            key: "adminGroup",
+            label: "กลุ่มบริหารงาน",
+            items: ["บริหารงานวิชาการ", "บริหารงานบุคคล", "บริหารงานงบประมาณ", "บริหารงานทั่วไป"]
+        },
+        {
+            key: "services",
+            label: "บริการ",
+            items: ["ตารางเรียน", "จองห้องสัมมนา", "ออกบูธกิจกรรม", "สมทบทุนการศึกษา"]
+        },
+        {
+            key: "newsMenu",
+            label: "ข่าวสาร",
+            items: ["ข่าวประชาสัมพันธ์", "ข่าวการเรียนการสอน", "ประกาศศูนย์", "ภาพกิจกรรม", "รับสมัครนักเรียน"]
+        },
+        {
+            key: "contact",
+            label: "ติดต่อเรา",
+            items: ["แผนที่ศูนย์", "แบบฟอร์มติดต่อ", "ช่องทางการติดต่อ"]
+        }
+    ];
+
     useEffect(() => {
         setOpenDropdown(null);
     }, [pathname]);
+
+    useEffect(() => {
+        const handleScroll = () => setIsScrolled(window.scrollY > 30);
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const toggleMobileMenu = () => {
+        setIsMobileOpen(!isMobileOpen);
+        setOpenDropdown(null);
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -85,58 +140,84 @@ export default function Navbar() {
         <>
             {/* TOP BAR */}
             <div
-                className={`fixed top-0 left-0 w-full z-60 bg-[#212346] text-white text-sm 
-                    flex flex-col md:flex-row items-center justify-between px-10 py-2
-                    transition-all duration-300 ${isVisibled ? "translate-y-0" : "-translate-y-full"}`}
+                className={`
+        fixed top-0 left-0 w-full z-60 bg-[#212346] text-white 
+        transition-all duration-300 backdrop-blur-md
+        ${isVisibled ? "translate-y-0" : "-translate-y-full"}
+    `}
             >
-                <div className="flex items-center gap-4">
-                    <Image
-                        src="/images/test_logo_watthangluang.png"
-                        width={40}
-                        height={40}
-                        alt="watthangluang"
-                    />
-                    <div>
-                        <h3>ศูนย์ศึกษาพระพุทธศาสนาวันอาทิตย์ วัดทางหลวง</h3>
-                        <h1>WATTANGLOUNG BUDDHIST LEARNING CENTER</h1>
-                    </div>
-                </div>
-                <div className="flex items-center gap-4">
-                    <div className="flex">
-                        <button
-                            className="px-4 py-2 cursor-pointer rounded-md text-white 
-                                transition-all duration-200 text-[12px] md:text-[16px]"
-                            onClick={() => {
-                                setOpenDropdown(null);
-                                router.push("/login");
-                            }}
-                        >
-                            ระบบรับสมัครนักเรียน
-                        </button>
-
-                        <button
-                            className="px-4 py-2 cursor-pointer rounded-md text-white 
-                                transition-all duration-200 text-[12px] md:text-[16px]"
-                            onClick={() => {
-                                setOpenDropdown(null);
-                                router.push("/login");
-                            }}
-                        >
-                            ระบบปฏิทินกลาง
-                        </button>
+                <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex flex-col md:flex-row 
+                     items-center justify-between gap-3 md:gap-0">
+                    <div className="flex items-center gap-3 sm:gap-4 text-center md:text-left">
+                        <Image
+                            src="/images/test_logo_watthangluang.png"
+                            width={42}
+                            height={42}
+                            alt="watthangluang"
+                            className="w-10 h-10 sm:w-11 sm:h-11"
+                        />
+                        <div className="leading-tight">
+                            <h3 className="text-[10px] sm:text-xs md:text-sm font-medium">
+                                ศูนย์ศึกษาพระพุทธศาสนาวันอาทิตย์ วัดทางหลวง
+                            </h3>
+                            <h1 className="text-[9px] sm:text-[11px] md:text-sm tracking-wide opacity-90">
+                                WATTANGLOUNG BUDDHIST LEARNING CENTER
+                            </h1>
+                        </div>
                     </div>
 
-                    {/* ระบบภาษา */}
-                    <div>
-                        <p className="px-3 py-1 border border-white/40 rounded-md text-xs cursor-pointer hover:bg-white/10 transition">
-                            TH
-                        </p>
+                    <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-5">
+                        <div className="flex gap-2 sm:gap-4">
+                            <button
+                                className="
+                                    px-3 py-1.5 sm:px-4 sm:py-2 
+                                    rounded-md text-white bg-white/10 hover:bg-white/20
+                                    transition-all duration-200 text-[10px] sm:text-sm md:text-[15px]
+                                    shadow-sm border border-white/10
+                                "
+                                onClick={() => {
+                                    setOpenDropdown(null);
+                                    router.push("/login");
+                                }}
+                            >
+                                ระบบรับสมัครนักเรียน
+                            </button>
+
+                            <button
+                                className="
+                                    px-3 py-1.5 sm:px-4 sm:py-2 
+                                    rounded-md text-white bg-white/10 hover:bg-white/20
+                                    transition-all duration-200 text-[10px] sm:text-sm md:text-[15px]
+                                    shadow-sm border border-white/10
+                                "
+                                onClick={() => {
+                                    setOpenDropdown(null);
+                                    router.push("/login");
+                                }}
+                            >
+                                ระบบปฏิทินกลาง
+                            </button>
+
+                            <div>
+                                <p className="
+                                    px-2.5 py-1 sm:px-3 sm:py-1.5 
+                                    border border-white/40 rounded-md 
+                                    text-[10px] sm:text-xs cursor-pointer
+                                    hover:bg-white/10 transition
+                                ">
+                                    TH
+                                </p>
+                            </div>
+                        </div>
+
+
+
                     </div>
+
                 </div>
             </div>
 
-            {/* NAVBAR */}
-            <nav
+            {/* <nav
                 className={`fixed top-0 left-0 w-full z-50 transition-all duration-300
                     ${isScrolled ? "bg-black/70 backdrop-blur-lg shadow-lg" : ""}
                     ${isVisibled ? "translate-y-14" : "translate-y-0"}`}
@@ -156,7 +237,6 @@ export default function Navbar() {
                     </h1>
 
                     <div className="hidden md:flex gap-8 text-lg">
-                        {/* หน้าแรก */}
                         <button
                             className="hover:text-yellow-300 transition cursor-pointer"
                             onClick={() => {
@@ -167,7 +247,6 @@ export default function Navbar() {
                             หน้าแรก
                         </button>
 
-                        {/* เกี่ยวกับเรา */}
                         <div className="relative">
                             <button
                                 onClick={() => toggleDropdown("about")}
@@ -177,8 +256,7 @@ export default function Navbar() {
                             </button>
 
                             {openDropdown === "about" && (
-                                <div 
-                                    // className="absolute top-full left-0 mt-2 bg-white text-black rounded-lg shadow-lg w-48"
+                                <div
                                     className={dropdownPanelBase}
                                 >
                                     <button
@@ -218,7 +296,6 @@ export default function Navbar() {
                             )}
                         </div>
 
-                        {/* กลุ่มบริหารงาน */}
                         <div className="relative">
                             <button
                                 onClick={() => toggleDropdown("adminGroup")}
@@ -228,8 +305,7 @@ export default function Navbar() {
                             </button>
 
                             {openDropdown === "adminGroup" && (
-                                <div 
-                                    // className="absolute top-full left-0 mt-2 bg-white text-black rounded-lg shadow-lg w-64"
+                                <div
                                     className={dropdownPanelBase}
                                 >
                                     <button
@@ -260,7 +336,6 @@ export default function Navbar() {
                             )}
                         </div>
 
-                        {/* บริการ */}
                         <div className="relative">
                             <button
                                 onClick={() => toggleDropdown("services")}
@@ -270,8 +345,7 @@ export default function Navbar() {
                             </button>
 
                             {openDropdown === "services" && (
-                                <div 
-                                    // className="absolute top-full left-0 mt-2 bg-white text-black rounded-lg shadow-lg w-60"
+                                <div
                                     className={dropdownPanelBase}
                                 >
                                     <button
@@ -282,27 +356,26 @@ export default function Navbar() {
                                     </button>
                                     <button
                                         className="block w-full px-4 py-2 text-left hover:bg-gray-200"
-                                        onClick={() => scrollToSection("food")}
+                                        onClick={() => scrollToSection("rules")}
                                     >
-                                        ตารางอาหารกลางวัน
-                                    </button>
-                                    <button
-                                        className="block w-full px-4 py-2 text-left hover:bg-gray-200"
-                                        onClick={() => scrollToSection("parent-guide")}
-                                    >
-                                        คู่มือผู้ปกครอง
+                                        การจองห้องสัมมนา
                                     </button>
                                     <button
                                         className="block w-full px-4 py-2 text-left hover:bg-gray-200"
                                         onClick={() => scrollToSection("rules")}
                                     >
-                                        ระเบียบการรับเด็ก
+                                        ออกบูธกิจกรรม/ร้านค้า
+                                    </button>
+                                    <button
+                                        className="block w-full px-4 py-2 text-left hover:bg-gray-200"
+                                        onClick={() => scrollToSection("rules")}
+                                    >
+                                        สมทบทุนการศึกษา
                                     </button>
                                 </div>
                             )}
                         </div>
 
-                        {/* ข่าวสาร */}
                         <div className="relative">
                             <button
                                 onClick={() => toggleDropdown("newsMenu")}
@@ -312,8 +385,7 @@ export default function Navbar() {
                             </button>
 
                             {openDropdown === "newsMenu" && (
-                                <div 
-                                    // className="absolute top-full left-0 mt-2 bg-white text-black rounded-lg shadow-lg w-64"
+                                <div
                                     className={dropdownPanelBase}
                                 >
                                     <button
@@ -350,7 +422,6 @@ export default function Navbar() {
                             )}
                         </div>
 
-                        {/* ติดต่อเรา */}
                         <div className="relative">
                             <button
                                 onClick={() => toggleDropdown("contact")}
@@ -360,8 +431,7 @@ export default function Navbar() {
                             </button>
 
                             {openDropdown === "contact" && (
-                                <div 
-                                    // className="absolute top-full left-0 mt-2 bg-white text-black rounded-lg shadow-lg w-48"
+                                <div
                                     className={dropdownPanelBase}
                                 >
                                     <button
@@ -399,7 +469,369 @@ export default function Navbar() {
                         </a>
                     </div>
                 </div>
+            </nav> */}
+
+            <nav
+                className={`fixed top-0 left-0 w-full z-50 transition-all duration-300
+                    ${isScrolled ? "bg-black/70 md:backdrop-blur-lg md:shadow-lg" : ""}
+                    ${isVisibled ? "translate-y-26 md:translate-y-16" : "translate-y-0"}`}
+            >
+                <div
+                    className="max-w-7xl mx-auto flex items-center justify-between px-6 py-5 text-white"
+                    ref={dropdownRef}
+                >
+                    {/* LEFT — LOGO / BRAND */}
+                    <h1
+                        className="text-xl font-semibold cursor-pointer"
+                        onClick={() => {
+                            setOpenDropdown(null);
+                            router.push("/");
+                        }}
+                    >
+                        ศพอ.วัดทางหลวง
+                    </h1>
+
+                    {/* DESKTOP MENU */}
+                    <div className="hidden md:flex gap-8 text-lg">
+
+                        {/* หน้าแรก */}
+                        <button
+                            className="hover:text-yellow-300 transition cursor-pointer"
+                            onClick={() => {
+                                setOpenDropdown(null);
+                                router.push("/");
+                            }}
+                        >
+                            หน้าแรก
+                        </button>
+
+                        {/* Dropdown group (template reused) */}
+                        {[
+                            {
+                                key: "about",
+                                title: "เกี่ยวกับเรา",
+                                items: [
+                                    { label: "ประวัติศูนย์", goto: "/about/history" },
+                                    { label: "วิสัยทัศน์", goto: "/about/vision" },
+                                    { label: "โครงสร้างองค์กร", goto: "/about/org-structure" },
+                                    { label: "บุคลากร", section: "staff" },
+                                ]
+                            },
+                            {
+                                key: "adminGroup",
+                                title: "กลุ่มบริหารงาน",
+                                items: [
+                                    { label: "บริหารงานวิชาการ", section: "academic" },
+                                    { label: "บริหารงานบุคคล", section: "personnel" },
+                                    { label: "บริหารงานงบประมาณ", section: "budget" },
+                                    { label: "บริหารงานทั่วไป", section: "general" },
+                                ]
+                            },
+                            {
+                                key: "services",
+                                title: "บริการ",
+                                items: [
+                                    { label: "ตารางเรียน", section: "activities" },
+                                    { label: "การจองห้องสัมมนา", section: "rules" },
+                                    { label: "ออกบูธกิจกรรม/ร้านค้า", section: "rules" },
+                                    { label: "สมทบทุนการศึกษา", section: "rules" },
+                                ]
+                            },
+                            {
+                                key: "newsMenu",
+                                title: "ข่าวสาร",
+                                items: [
+                                    { label: "ข่าวสารประชาสัมพันธ์", section: "newsMain" },
+                                    { label: "ข่าวสารการเรียนการสอน", section: "news" },
+                                    { label: "ประกาศศูนย์", section: "announce" },
+                                    { label: "ภาพกิจกรรม", section: "activity" },
+                                    { label: "รับสมัครนักเรียน", section: "admission" },
+                                ]
+                            },
+                            {
+                                key: "contact",
+                                title: "ติดต่อเรา",
+                                items: [
+                                    { label: "แผนที่ศูนย์", section: "map" },
+                                    { label: "แบบฟอร์มติดต่อ", section: "contactForm" },
+                                    { label: "ช่องทางการติดต่อ", section: "contactInfo" },
+                                ]
+                            }
+                        ].map((menu) => (
+                            <div className="relative" key={menu.key}>
+                                <button
+                                    onClick={() => toggleDropdown(menu.key)}
+                                    className="hover:text-yellow-300 transition cursor-pointer"
+                                >
+                                    {menu.title}
+                                </button>
+
+                                {openDropdown === menu.key && (
+                                    <div className={dropdownPanelBase}>
+                                        {menu.items.map((item, i) => (
+                                            <button
+                                                key={i}
+                                                className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+                                                onClick={() => {
+                                                    setOpenDropdown(null);
+                                                    if (item.goto) router.push(item.goto);
+                                                    else scrollToSection(item.section || "");
+                                                }}
+                                            >
+                                                {item.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* SOCIAL ICONS (DESKTOP ONLY) */}
+                    <div className="hidden md:flex gap-4 text-xl">
+                        <a href="#" className="hover:text-yellow-300"><FaInstagram /></a>
+                        <a href="#" className="hover:text-yellow-300"><FaFacebook /></a>
+                        <a href="mailto:example@gmail.com" className="hover:text-yellow-300"><SiGmail /></a>
+                    </div>
+
+                    {/* HAMBURGER (MOBILE) */}
+                    <button
+                        className="md:hidden text-3xl"
+                        onClick={() => {
+                            setIsMobileOpen((prev) => !prev);
+                            setOpenDropdown(null);
+                        }}
+                    >
+                        {isMobileOpen ? "✕" : "☰"}
+                    </button>
+                </div>
+
+                {/* MOBILE MENU PANEL */}
+                {isMobileOpen && (
+                    <div className="md:hidden bg-black/80 backdrop-blur-xl text-white px-6 py-4 space-y-3 animate-slideDown">
+                        {mobileMenu.map((menu) => (
+                            <div key={menu.key ?? menu.label}>
+
+                                {/* Parent button */}
+                                <button
+                                    className="w-full text-left py-2 border-b border-white/10 flex justify-between items-center"
+                                    onClick={() => toggleDropdown(menu.key ?? menu.label)}
+                                >
+                                    {menu.label}
+                                    {menu.items && (
+                                        <span className="text-lg">
+                                            {openDropdown === (menu.key || menu.label) ? "−" : "+"}
+                                        </span>
+                                    )}
+                                </button>
+
+                                {/* Sub items */}
+                                {menu.items && openDropdown === (menu.key ?? menu.label) && (
+                                    <div className="pl-4 pt-1 pb-2 space-y-1 text-sm text-gray-300">
+                                        {menu.items.map((sub, j) => (
+                                            <button
+                                                key={j}
+                                                className="block w-full text-left py-1 hover:text-yellow-300"
+                                            >
+                                                {sub}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+
+                        {/* SOCIAL ICONS MOBILE */}
+                        <div className="flex gap-6 text-2xl pt-4">
+                            <FaInstagram className="hover:text-yellow-300" />
+                            <FaFacebook className="hover:text-yellow-300" />
+                            <SiGmail className="hover:text-yellow-300" />
+                        </div>
+                    </div>
+                )}
             </nav>
+
+            {/* 
+            <nav
+                className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 
+                ${isScrolled ? "bg-[#1d2340]/90 backdrop-blur-md shadow-lg" : "bg-transparent"} 
+                ${isVisibled ? "translate-y-14" : "translate-y-0"}`}
+            >
+                <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4 text-white">
+                    <div
+                        className="flex items-center gap-3 cursor-pointer"
+                    >
+                        <Image
+                            src="/images/test_logo_watthangluang.png"
+                            width={42}
+                            height={42}
+                            alt="logo"
+                            className="w-10 h-10"
+                        />
+                        <div className="leading-tight">
+                            <h1 className="text-lg font-semibold">
+                                ศพอ.วัดทางหลวง
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div className="hidden md:flex gap-10 items-center text-lg">
+
+                        <button className="hover:text-yellow-300 transition">หน้าแรก</button>
+
+                        <div className="relative">
+                            <button
+                                className="hover:text-yellow-300 transition"
+                                onClick={() => toggleDropdown("about")}
+                            >
+                                เกี่ยวกับเรา
+                            </button>
+
+                            {openDropdown === "about" && (
+                                <div className={dropdownPanelBase}>
+                                    <DropdownItem text="ประวัติศูนย์" />
+                                    <DropdownItem text="วิสัยทัศน์" />
+                                    <DropdownItem text="โครงสร้างองค์กร" />
+                                    <DropdownItem text="บุคลากร" />
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="relative">
+                            <button
+                                className="hover:text-yellow-300 transition"
+                                onClick={() => toggleDropdown("admin")}
+                            >
+                                กลุ่มบริหารงาน
+                            </button>
+
+                            {openDropdown === "admin" && (
+                                <div className={dropdownPanelBase}>
+                                    <DropdownItem text="บริหารงานวิชาการ" />
+                                    <DropdownItem text="บริหารงานบุคคล" />
+                                    <DropdownItem text="บริหารงานงบประมาณ" />
+                                    <DropdownItem text="บริหารงานทั่วไป" />
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="relative">
+                            <button
+                                className="hover:text-yellow-300 transition"
+                                onClick={() => toggleDropdown("services")}
+                            >
+                                บริการ
+                            </button>
+
+                            {openDropdown === "services" && (
+                                <div className={dropdownPanelBase}>
+                                    <DropdownItem text="ตารางเรียน" />
+                                    <DropdownItem text="การจองห้องสัมมนา" />
+                                    <DropdownItem text="ออกบูธกิจกรรม" />
+                                    <DropdownItem text="สมทบทุนการศึกษา" />
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="relative">
+                            <button
+                                className="hover:text-yellow-300 transition"
+                                onClick={() => toggleDropdown("news")}
+                            >
+                                ข่าวสาร
+                            </button>
+
+                            {openDropdown === "news" && (
+                                <div className={dropdownPanelBase}>
+                                    <DropdownItem text="ข่าวประชาสัมพันธ์" />
+                                    <DropdownItem text="ข่าวการเรียนการสอน" />
+                                    <DropdownItem text="ภาพกิจกรรม" />
+                                    <DropdownItem text="ประกาศศูนย์" />
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="relative">
+                            <button
+                                className="hover:text-yellow-300 transition"
+                                onClick={() => toggleDropdown("contact")}
+                            >
+                                ติดต่อเรา
+                            </button>
+
+                            {openDropdown === "contact" && (
+                                <div className={dropdownPanelBase}>
+                                    <DropdownItem text="แผนที่ศูนย์" />
+                                    <DropdownItem text="แบบฟอร์มติดต่อ" />
+                                    <DropdownItem text="ช่องทางการติดต่อ" />
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="flex gap-4 text-xl">
+                            <a className="hover:text-yellow-300"><FaInstagram /></a>
+                            <a className="hover:text-yellow-300"><FaFacebook /></a>
+                            <a className="hover:text-yellow-300"><SiGmail /></a>
+                        </div>
+                    </div>
+
+                    <button
+                        className="md:hidden text-3xl"
+                        onClick={toggleMobileMenu}
+                    >
+                        {isMobileOpen ? "✕" : "☰"}
+                    </button>
+                </div>
+
+                {isMobileOpen && (
+                    <div className="md:hidden bg-[#1d2340]/95 backdrop-blur-xl text-white px-6 py-4 space-y-4">
+
+                        <MobileDropdown title="หน้าแรก" />
+
+                        <MobileCollapse
+                            title="เกี่ยวกับเรา"
+                            items={["ประวัติศูนย์", "วิสัยทัศน์", "โครงสร้างองค์กร", "บุคลากร"]}
+                            openDropdown={openDropdown}
+                            toggleDropdown={toggleDropdown}
+                        />
+
+                        <MobileCollapse
+                            title="กลุ่มบริหารงาน"
+                            items={["บริหารงานวิชาการ", "บริหารงานบุคคล", "บริหารงานงบประมาณ", "บริหารงานทั่วไป"]}
+                            openDropdown={openDropdown}
+                            toggleDropdown={toggleDropdown}
+                        />
+
+                        <MobileCollapse
+                            title="บริการ"
+                            items={["ตารางเรียน", "จองห้องสัมมนา", "ออกบูธกิจกรรม", "สมทบทุนการศึกษา"]}
+                            openDropdown={openDropdown}
+                            toggleDropdown={toggleDropdown}
+                        />
+
+                        <MobileCollapse
+                            title="ข่าวสาร"
+                            items={["ข่าวประชาสัมพันธ์", "ข่าวการเรียนการสอน", "ภาพกิจกรรม", "ประกาศศูนย์"]}
+                            openDropdown={openDropdown}
+                            toggleDropdown={toggleDropdown}
+                        />
+
+                        <MobileCollapse
+                            title="ติดต่อเรา"
+                            items={["แผนที่ศูนย์", "แบบฟอร์มติดต่อ", "ช่องทางการติดต่อ"]}
+                            openDropdown={openDropdown}
+                            toggleDropdown={toggleDropdown}
+                        />
+
+                        <div className="flex gap-6 text-2xl pt-3">
+                            <FaInstagram className="hover:text-yellow-300" />
+                            <FaFacebook className="hover:text-yellow-300" />
+                            <SiGmail className="hover:text-yellow-300" />
+                        </div>
+
+                    </div>
+                )}
+            </nav> */}
         </>
     );
 }
