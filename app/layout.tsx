@@ -41,10 +41,10 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
-        <script
+        {/* <script
           src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&libraries=maps,marker&loading=async"
           defer
-        ></script>
+        ></script> */}
       </body>
     </html>
   );

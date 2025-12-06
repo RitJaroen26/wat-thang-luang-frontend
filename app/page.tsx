@@ -1,4 +1,5 @@
 import AboutSection from "@/components/AboutSection";
+import ChatAsk from "@/components/AskChat";
 import HomeSection from "@/components/HomeSection";
 import Introduction from "@/components/Introduction";
 import Maps from "@/components/Maps";
@@ -11,6 +12,7 @@ export default function Home() {
     <div>
       {/* <Navbar /> */}
       <HomeSection />
+      <ChatAsk />
       <Introduction />
       <NewsSection />
       <Maps />

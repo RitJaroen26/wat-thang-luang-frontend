@@ -111,7 +111,7 @@ export default function NewsPage() {
                                         </div>
 
                                         <div className="flex flex-col lg:flex-row gap-8 mt-16 items-start justify-center">
-                                            <div className="relative w-full lg:w-3/5 xl:w-[60%] h-[400px] rounded-3xl overflow-hidden shadow-2xl">
+                                            <div className="relative hidden md:block w-full lg:w-3/5 xl:w-[60%] h-[400px] rounded-3xl overflow-hidden shadow-2xl">
                                                 <Image
                                                     src="/images/LINE_ALBUM_21268_251203_3.jpg"
                                                     fill
