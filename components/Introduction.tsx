@@ -29,7 +29,7 @@ const videos = [
 export default function VideoPage() {
     return (
         <ParallaxClientProvider>
-            <main className="bg-[#f3f2ef] text-[#222] min-h-screen">
+            <main className="bg-[#f3f2ef] text-[#222] min-h-screen" id="introduction">
                 <section className="relative h-[180px] sm:h-[220px] md:h-[260px] w-full overflow-hidden">
 
                     <div className="absolute inset-0 opacity-10 mix-blend-overlay"></div>

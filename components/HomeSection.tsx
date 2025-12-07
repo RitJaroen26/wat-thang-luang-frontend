@@ -21,6 +21,13 @@ export default function HomeSection() {
         return () => clearInterval(timer);
     }, []);
 
+    const goToDetails = () => {
+        const section = document.getElementById("introduction");
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
     return (
         <section
             className="
@@ -50,7 +57,7 @@ export default function HomeSection() {
 
             <div className="relative h-full flex flex-col items-center justify-center 
                 text-white text-center px-6">
-                
+
                 <h1 className="
                     text-4xl md:text-6xl font-extrabold 
                     leading-tight md:leading-snug 
@@ -91,13 +98,15 @@ export default function HomeSection() {
                     </div>
                 </div>
 
-                {/* CTA Button */}
-                <button className="
-                    mt-10 px-10 py-3 rounded-lg font-semibold 
-                    bg-amber-300 text-black 
-                    shadow-xl hover:bg-amber-400 
-                    transition-all duration-200 
-                ">
+                <button
+                    className="
+                        mt-10 px-10 py-3 rounded-lg font-semibold 
+                        bg-amber-300 text-black 
+                        shadow-xl hover:bg-amber-400 
+                        transition-all duration-200 cursor-pointer
+                    "
+                    onClick={goToDetails}
+                >
                     รายละเอียด
                 </button>
             </div>

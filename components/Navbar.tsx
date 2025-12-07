@@ -230,7 +230,7 @@ export default function Navbar() {
                                     px-3 py-1.5 sm:px-4 sm:py-2 
                                     rounded-md text-white bg-white/10 hover:bg-white/20
                                     transition-all duration-200 text-[10px] sm:text-sm md:text-[15px]
-                                    shadow-sm border border-white/10
+                                    shadow-sm border border-white/10 cursor-pointer
                                 "
                                 onClick={() => {
                                     setOpenDropdown(null);
@@ -245,7 +245,7 @@ export default function Navbar() {
                                     px-3 py-1.5 sm:px-4 sm:py-2 
                                     rounded-md text-white bg-white/10 hover:bg-white/20
                                     transition-all duration-200 text-[10px] sm:text-sm md:text-[15px]
-                                    shadow-sm border border-white/10
+                                    shadow-sm border border-white/10 cursor-pointer
                                 "
                                 onClick={() => {
                                     setOpenDropdown(null);
@@ -285,7 +285,7 @@ export default function Navbar() {
                     /* 🖥 Desktop: override mobile bg */
                     md:${isScrolled
                         ? "bg-black/70 backdrop-blur-lg shadow-lg"
-                        : "bg-transparent backdrop-blur-0 shadow-none"
+                        : ""
                     }
                 
                     ${isVisibled

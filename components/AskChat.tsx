@@ -98,7 +98,7 @@ export default function ChatAsk({ locale = "th" }) {
                     fixed bottom-5 right-5 z-50
                     w-12 h-12 rounded-full bg-yellow-400 text-black
                     shadow-xl flex items-center justify-center
-                    hover:bg-yellow-300 transition-all duration-200
+                    hover:bg-yellow-300 transition-all duration-200 cursor-pointer
                 "
             >
                 <IoChatbubbleEllipsesOutline className="w-6 h-6" />
@@ -116,7 +116,7 @@ export default function ChatAsk({ locale = "th" }) {
             >
                 {/* Header */}
                 <div className="bg-[#212346] text-white px-4 py-3 rounded-t-xl">
-                    <p className="text-sm font-semibold">ถาม–ตอบ ศูนย์ศึกษา</p>
+                    <p className="text-sm font-semibold">ถาม–ตอบ ศูนย์การศึกษาพระพุทธศาสนา</p>
                     <p className="text-[11px] opacity-70">ระบบตอบกลับอัตโนมัติ</p>
                 </div>
 
