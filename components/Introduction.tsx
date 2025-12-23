@@ -30,7 +30,7 @@ export default function VideoPage() {
     return (
         <ParallaxClientProvider>
             <main className="bg-[#f3f2ef] text-[#222] min-h-screen" id="introduction">
-                <section className="relative h-[180px] sm:h-[220px] md:h-[260px] w-full overflow-hidden">
+                {/* <section className="relative h-[180px] sm:h-[220px] md:h-[260px] w-full overflow-hidden">
 
                     <div className="absolute inset-0 opacity-10 mix-blend-overlay"></div>
 
@@ -57,7 +57,7 @@ export default function VideoPage() {
                             </motion.p>
                         </Parallax>
                     </div>
-                </section>
+                </section> */}
 
                 <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 space-y-16">
                     <Parallax speed={-5}>
@@ -92,7 +92,7 @@ export default function VideoPage() {
                         </motion.div>
                     </Parallax>
 
-                    <section className="space-y-8 mt-10">
+                    <section className="space-y-8 mt-30">
                         <Parallax speed={-5}>
                             <h2 className="text-xl sm:text-2xl font-semibold text-[#111] mb-1">
                                 วิดีทัศน์ทั้งหมด

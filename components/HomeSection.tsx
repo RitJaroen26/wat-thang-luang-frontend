@@ -10,7 +10,8 @@ export default function HomeSection() {
         "/images/LINE_ALBUM_21268_251203_3.jpg",
         "/images/LINE_ALBUM_21268_251203_4.jpg",
         "/images/LINE_ALBUM_21268_251203_5.jpg",
-        "/images/LINE_ALBUM_21268_251203_8.jpg"
+        "/images/LINE_ALBUM_21268_251203_8.jpg",
+        "/images/LINE_ALBUM_21268_251203_7.jpg"
     ];
 
     useEffect(() => {
@@ -59,13 +60,12 @@ export default function HomeSection() {
                 text-white text-center px-6">
 
                 <h1 className="
-                    text-4xl md:text-6xl font-extrabold 
+                    text-2xl md:text-5xl font-extrabold 
                     leading-tight md:leading-snug 
                     drop-shadow-[0_4px_15px_rgba(0,0,0,0.7)]
                     animate-fadeIn
                 ">
-                    ศูนย์การศึกษาพระพุทธศาสนา<br />
-                    วันอาทิตย์
+                    ศูนย์การศึกษาพระพุทธศาสนาวันอาทิตย์{" "}วัดทางหลวง
                 </h1>
 
                 <p className="
@@ -73,7 +73,7 @@ export default function HomeSection() {
                     drop-shadow-[0_2px_5px_rgba(0,0,0,0.8)]
                     animate-fadeIn animation-delay-200
                 ">
-                    วัดทางหลวง
+                    ศูนย์ต้นแบบ(โดดเด่น) จังหวัดนนทบุรี กรมการศาสนา กระทรวงวัฒนธรรม
                 </p>
 
                 {/* Info Section */}

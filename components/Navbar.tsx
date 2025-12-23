@@ -234,7 +234,7 @@ export default function Navbar() {
                                 "
                                 onClick={() => {
                                     setOpenDropdown(null);
-                                    router.push("/login");
+                                    router.push(`${process.env.NEXT_PUBLIC_API_REG}`);
                                 }}
                             >
                                 ระบบรับสมัครนักเรียน
@@ -403,7 +403,7 @@ export default function Navbar() {
                     {/* SOCIAL ICONS (DESKTOP ONLY) */}
                     <div className="hidden md:flex gap-4 text-xl">
                         <a href="#" className="hover:text-yellow-300"><FaInstagram /></a>
-                        <a href="#" className="hover:text-yellow-300"><FaFacebook /></a>
+                        <a href="https://web.facebook.com/WATTANGLOUNGLEARN/?locale=th_TH&_rdc=1&_rdr#" className="hover:text-yellow-300"><FaFacebook /></a>
                         <a href="mailto:example@gmail.com" className="hover:text-yellow-300"><SiGmail /></a>
                     </div>
 
