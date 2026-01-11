@@ -76,7 +76,6 @@ export default function HomeSection() {
                     ศูนย์ต้นแบบ(โดดเด่น) จังหวัดนนทบุรี กรมการศาสนา กระทรวงวัฒนธรรม
                 </p>
 
-                {/* Info Section */}
                 <div className="
                     flex flex-col md:flex-row 
                     items-center justify-center 

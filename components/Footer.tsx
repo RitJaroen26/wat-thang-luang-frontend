@@ -7,17 +7,12 @@ import { SiGmail } from "react-icons/si";
 export default function Footer() {
     return (
         <footer className="relative bg-[#0e1120] text-gray-300 pt-24 pb-12 overflow-hidden">
-
-            {/* Decorative gradient blobs */}
             <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-400/10 blur-[120px] rounded-full"></div>
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/10 blur-[130px] rounded-full"></div>
 
-            {/* Top highlight line */}
             <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 opacity-60"></div>
 
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-12 relative z-10">
-
-                {/* BRANDING — BIG ZONE */}
                 <div className="md:col-span-2 space-y-4">
                     <div className="flex items-center gap-4">
                         <Image
@@ -39,11 +34,9 @@ export default function Footer() {
                         ผ่านการเรียนรู้ที่ทันสมัยและอบอุ่นในชุมชนวัดทางหลวง
                     </p>
 
-                    {/* Soft underline */}
                     <div className="w-24 h-[1.5px] bg-gradient-to-r from-yellow-400 to-transparent"></div>
                 </div>
 
-                {/* NAVIGATION */}
                 <div>
                     <h4 className="text-lg font-semibold text-white mb-5 tracking-wide">
                         เมนูหลัก
@@ -68,7 +61,6 @@ export default function Footer() {
                     </ul>
                 </div>
 
-                {/* PROGRAMS */}
                 <div>
                     <h4 className="text-lg font-semibold text-white mb-5 tracking-wide">
                         ด้านการเรียนรู้
@@ -82,7 +74,6 @@ export default function Footer() {
                     </ul>
                 </div>
 
-                {/* CONTACT */}
                 <div>
                     <h4 className="text-lg font-semibold text-white mb-5 tracking-wide">
                         ติดต่อศูนย์
@@ -122,7 +113,6 @@ export default function Footer() {
                         </p>
                     </div>
 
-                    {/* SOCIAL */}
                     <div className="flex gap-5 text-xl mt-6">
                         <a className="hover:text-yellow-300 transition cursor-pointer hover:scale-110"><FaInstagram /></a>
                         <a className="hover:text-yellow-300 transition cursor-pointer hover:scale-110"><FaFacebookF /></a>
@@ -131,7 +121,6 @@ export default function Footer() {
                 </div>
             </div>
 
-            {/* BOTTOM COPYRIGHT */}
             <div className="max-w-7xl mx-auto mt-12 border-t border-gray-700/40 pt-4 text-center text-[13px] text-gray-500">
                 © {new Date().getFullYear()}{" "}
                 ศูนย์ศึกษาพระพุทธศาสนาวันอาทิตย์ วัดทางหลวง — All rights reserved.
