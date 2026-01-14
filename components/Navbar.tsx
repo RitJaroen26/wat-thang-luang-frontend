@@ -6,13 +6,8 @@ import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import Image from "next/image";
 
-type DesktopMenuItem = {
-    label: string;
-    goto?: string;
-    section?: string;
-};
-
-type MobileSubItem = {
+// Combine the types into a single interface with optional properties
+type MenuItem = {
     label: string;
     goto?: string;
     section?: string;
@@ -20,9 +15,10 @@ type MobileSubItem = {
 
 type MobileMenu = {
     key?: string;
-    label: string;
+    title?: string; // Add title as optional since you use it
+    label?: string; // Add label as optional for direct links
     action?: () => void;
-    items?: MobileSubItem[];
+    items?: MenuItem[];
 };
 
 export default function Navbar() {
@@ -37,107 +33,52 @@ export default function Navbar() {
     const router = useRouter();
     const pathname = usePathname();
 
-    const mobileMenu: MobileMenu[] = [
-        { label: "หน้าแรก", action: () => router.push("/") },
-        {
+    // Define the menu structure directly or use the type
+    const menuStructure: MobileMenu[] = [
+        { 
             key: "about",
-            label: "เกี่ยวกับเรา",
+            title: "เกี่ยวกับเรา",
             items: [
                 { label: "ประวัติศูนย์", goto: "/about/history" },
                 { label: "วิสัยทัศน์", goto: "/about/vision" },
                 { label: "โครงสร้างองค์กร", goto: "/about/org-structure" },
-                { label: "บุคลากร", section: "staff" },
             ]
         },
         {
-            key: "about",
-            label: "เกี่ยวกับเรา",
+            key: "services",
+            title: "บริการ",
             items: [
-                { label: "ประวัติศูนย์", goto: "/about/history" },
-                { label: "วิสัยทัศน์", goto: "/about/vision" },
-                { label: "โครงสร้างองค์กร", goto: "/about/org-structure" },
-                { label: "บุคลากร", section: "staff" },
+                { label: "ตารางเรียน", section: "activities" },
+                { label: "คาเฟ่เด็กวัด", goto: "/services/cafe_dekwat" },
+                { label: "สมทบทุนการศึกษา", goto: "/services/donation" },
             ]
         },
         {
-            key: "about",
-            label: "เกี่ยวกับเรา",
+            key: "newsMenu",
+            title: "ข่าวสาร",
             items: [
-                { label: "ประวัติศูนย์", goto: "/about/history" },
-                { label: "วิสัยทัศน์", goto: "/about/vision" },
-                { label: "โครงสร้างองค์กร", goto: "/about/org-structure" },
-                { label: "บุคลากร", section: "staff" },
+                { label: "ข่าวสารประชาสัมพันธ์", section: "newsMain" },
+                { label: "รับสมัครนักเรียน", section: "admission" },
             ]
         },
         {
-            key: "about",
-            label: "เกี่ยวกับเรา",
+            key: "contact",
+            title: "ติดต่อเรา",
             items: [
-                { label: "ประวัติศูนย์", goto: "/about/history" },
-                { label: "วิสัยทัศน์", goto: "/about/vision" },
-                { label: "โครงสร้างองค์กร", goto: "/about/org-structure" },
-                { label: "บุคลากร", section: "staff" },
-            ]
-        },
-        {
-            key: "about",
-            label: "เกี่ยวกับเรา",
-            items: [
-                { label: "ประวัติศูนย์", goto: "/about/history" },
-                { label: "วิสัยทัศน์", goto: "/about/vision" },
-                { label: "โครงสร้างองค์กร", goto: "/about/org-structure" },
-                { label: "บุคลากร", section: "staff" },
+                { label: "แผนที่ศูนย์", section: "map" },
+                { label: "แบบฟอร์มติดต่อ", section: "contactForm" },
+                { label: "ช่องทางการติดต่อ", section: "contactInfo" },
             ]
         }
     ];
-
-    const mobileRouteMap: Record<string, string> = {
-        "ประวัติศูนย์": "/about/history",
-        "วิสัยทัศน์": "/about/vision",
-        "โครงสร้างองค์กร": "/about/org-structure",
-        "บุคลากร": "/#staff",
-
-        "บริหารงานวิชาการ": "/#academic",
-        "บริหารงานบุคคล": "/#personnel",
-        "บริหารงานงบประมาณ": "/#budget",
-        "บริหารงานทั่วไป": "/#general",
-
-        "ตารางเรียน": "/#activities",
-        "จองห้องสัมมนา": "/#rules",
-        "ออกบูธกิจกรรม": "/#rules",
-        "สมทบทุนการศึกษา": "/#rules",
-
-        "ข่าวประชาสัมพันธ์": "/#newsMain",
-        "ข่าวการเรียนการสอน": "/#news",
-        "ประกาศศูนย์": "/#announce",
-        "ภาพกิจกรรม": "/#activity",
-        "รับสมัครนักเรียน": "/#admission",
-
-        "แผนที่ศูนย์": "/#map",
-        "แบบฟอร์มติดต่อ": "/#contactForm",
-        "ช่องทางการติดต่อ": "/#contactInfo",
-    };
 
     useEffect(() => {
         setOpenDropdown(null);
     }, [pathname]);
 
     useEffect(() => {
-        const handleScroll = () => setIsScrolled(window.scrollY > 30);
-
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-
-    const toggleMobileMenu = () => {
-        setIsMobileOpen(!isMobileOpen);
-        setOpenDropdown(null);
-    };
-
-    useEffect(() => {
         const handleScroll = () => {
             const currentY = window.scrollY;
-
             setIsScrolled(currentY > 20);
 
             if (currentY > lastScrollY.current && currentY > 80) {
@@ -145,7 +86,6 @@ export default function Navbar() {
             } else {
                 setIsVisibled(true);
             }
-
             lastScrollY.current = currentY;
         };
 
@@ -168,7 +108,6 @@ export default function Navbar() {
     };
 
     const scrollToSection = (id: string) => {
-
         if (pathname !== "/") {
             router.push(`/#${id}`);
             setOpenDropdown(null);
@@ -185,14 +124,6 @@ export default function Navbar() {
 
     const dropdownPanelBase =
         "absolute top-full left-0 mt-3 w-64 rounded-xl bg-white/95 text-slate-900 shadow-xl ring-1 ring-slate-900/5 overflow-hidden py-2";
-
-    const dropdownItemBase =
-        "block w-full px-4 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition";
-
-    const dropdownLabel = (menu: string) =>
-        `inline-flex items-center gap-1 text-[15px] font-medium tracking-wide transition 
-         ${openDropdown === menu ? "text-yellow-300" : "text-white hover:text-yellow-300"}`;
-
 
     return (
         <>
@@ -218,7 +149,7 @@ export default function Navbar() {
                                 ศูนย์ศึกษาพระพุทธศาสนาวันอาทิตย์ วัดทางหลวง
                             </h3>
                             <h1 className="text-[9px] sm:text-[11px] md:text-sm tracking-wide opacity-90">
-                                WATTANGLOUNG BUDDHIST LEARNING CENTER
+                                WATTHANGLOUNG BUDDHIST LEARNING CENTER
                             </h1>
                         </div>
                     </div>
@@ -272,10 +203,6 @@ export default function Navbar() {
             </div>
 
             <nav
-                // className={`fixed top-0 left-0 w-full z-50 transition-all duration-300
-                //     ${isScrolled ? "bg-black/70 md:backdrop-blur-lg md:shadow-lg" : ""}
-                //     ${isVisibled ? "translate-y-26 md:translate-y-16" : "translate-y-0"}`}
-
                 className={`
                     fixed top-0 left-0 w-full z-50 transition-all duration-300
                             
@@ -319,76 +246,29 @@ export default function Navbar() {
                             หน้าแรก
                         </button>
 
-                        {[
-                            {
-                                key: "about",
-                                title: "เกี่ยวกับเรา",
-                                items: [
-                                    { label: "ประวัติศูนย์", goto: "/about/history" },
-                                    { label: "วิสัยทัศน์", goto: "/about/vision" },
-                                    { label: "โครงสร้างองค์กร", goto: "/about/org-structure" },
-                                    { label: "บุคลากร", section: "staff" },
-                                ]
-                            },
-                            {
-                                key: "adminGroup",
-                                title: "กลุ่มบริหารงาน",
-                                items: [
-                                    { label: "บริหารงานวิชาการ", section: "academic" },
-                                    { label: "บริหารงานบุคคล", section: "personnel" },
-                                    { label: "บริหารงานงบประมาณ", section: "budget" },
-                                    { label: "บริหารงานทั่วไป", section: "general" },
-                                ]
-                            },
-                            {
-                                key: "services",
-                                title: "บริการ",
-                                items: [
-                                    { label: "ตารางเรียน", section: "activities" },
-                                    { label: "การจองห้องสัมมนา", section: "rules" },
-                                    { label: "ออกบูธกิจกรรม/ร้านค้า", section: "rules" },
-                                    { label: "สมทบทุนการศึกษา", section: "rules" },
-                                ]
-                            },
-                            {
-                                key: "newsMenu",
-                                title: "ข่าวสาร",
-                                items: [
-                                    { label: "ข่าวสารประชาสัมพันธ์", section: "newsMain" },
-                                    { label: "ข่าวสารการเรียนการสอน", section: "news" },
-                                    { label: "ประกาศศูนย์", section: "announce" },
-                                    { label: "ภาพกิจกรรม", section: "activity" },
-                                    { label: "รับสมัครนักเรียน", section: "admission" },
-                                ]
-                            },
-                            {
-                                key: "contact",
-                                title: "ติดต่อเรา",
-                                items: [
-                                    { label: "แผนที่ศูนย์", section: "map" },
-                                    { label: "แบบฟอร์มติดต่อ", section: "contactForm" },
-                                    { label: "ช่องทางการติดต่อ", section: "contactInfo" },
-                                ]
-                            }
-                        ].map((menu) => (
+                        {menuStructure.map((menu) => (
                             <div className="relative" key={menu.key}>
                                 <button
-                                    onClick={() => toggleDropdown(menu.key)}
+                                    onClick={() => menu.key && toggleDropdown(menu.key)}
                                     className="hover:text-yellow-300 transition cursor-pointer"
+                                    onMouseEnter={() => menu.key && setOpenDropdown(menu.key)}
                                 >
                                     {menu.title}
                                 </button>
 
-                                {openDropdown === menu.key && (
-                                    <div className={dropdownPanelBase}>
-                                        {menu.items.map((item, i) => (
+                                {menu.key && openDropdown === menu.key && (
+                                    <div 
+                                        className={dropdownPanelBase}
+                                        onMouseLeave={() => setOpenDropdown(null)}
+                                    >
+                                        {menu.items?.map((item, i) => (
                                             <button
                                                 key={i}
                                                 className="block w-full text-left px-4 py-2 hover:bg-gray-200"
                                                 onClick={() => {
                                                     setOpenDropdown(null);
                                                     if (item.goto) router.push(item.goto);
-                                                    else scrollToSection(item.section || "");
+                                                    else if (item.section) scrollToSection(item.section);
                                                 }}
                                             >
                                                 {item.label}
@@ -421,77 +301,27 @@ export default function Navbar() {
 
                 {/* MOBILE MENU PANEL */}
                 {isMobileOpen && (
-                    <div className="md:hidden bg-black/80 backdrop-blur-xl text-white px-6 py-4 space-y-3 animate-slideDown">
+                    <div className="md:hidden bg-black/80 backdrop-blur-xl text-white px-6 py-4 space-y-3 animate-slideDown max-h-[80vh] overflow-y-auto">
                         <button
                             className="w-full text-left py-2 border-b border-white/10 flex justify-between items-center"
                             onClick={() => {
                                 setOpenDropdown(null);
                                 router.push("/");
+                                setIsMobileOpen(false);
                             }}
                         >
                             หน้าแรก
                         </button>
 
-                        {[
-                            {
-                                key: "about",
-                                title: "เกี่ยวกับเรา",
-                                items: [
-                                    { label: "ประวัติศูนย์", goto: "/about/history" },
-                                    { label: "วิสัยทัศน์", goto: "/about/vision" },
-                                    { label: "โครงสร้างองค์กร", goto: "/about/org-structure" },
-                                    { label: "บุคลากร", section: "staff" },
-                                ]
-                            },
-                            {
-                                key: "adminGroup",
-                                title: "กลุ่มบริหารงาน",
-                                items: [
-                                    { label: "บริหารงานวิชาการ", section: "academic" },
-                                    { label: "บริหารงานบุคคล", section: "personnel" },
-                                    { label: "บริหารงานงบประมาณ", section: "budget" },
-                                    { label: "บริหารงานทั่วไป", section: "general" },
-                                ]
-                            },
-                            {
-                                key: "services",
-                                title: "บริการ",
-                                items: [
-                                    { label: "ตารางเรียน", section: "activities" },
-                                    { label: "การจองห้องสัมมนา", section: "rules" },
-                                    { label: "ออกบูธกิจกรรม/ร้านค้า", section: "rules" },
-                                    { label: "สมทบทุนการศึกษา", section: "rules" },
-                                ]
-                            },
-                            {
-                                key: "newsMenu",
-                                title: "ข่าวสาร",
-                                items: [
-                                    { label: "ข่าวสารประชาสัมพันธ์", section: "newsMain" },
-                                    { label: "ข่าวสารการเรียนการสอน", section: "news" },
-                                    { label: "ประกาศศูนย์", section: "announce" },
-                                    { label: "ภาพกิจกรรม", section: "activity" },
-                                    { label: "รับสมัครนักเรียน", section: "admission" },
-                                ]
-                            },
-                            {
-                                key: "contact",
-                                title: "ติดต่อเรา",
-                                items: [
-                                    { label: "แผนที่ศูนย์", section: "map" },
-                                    { label: "แบบฟอร์มติดต่อ", section: "contactForm" },
-                                    { label: "ช่องทางการติดต่อ", section: "contactInfo" },
-                                ]
-                            }
-                        ].map((menu) => (
-                            <div key={`${menu.key}`}>
+                        {menuStructure.map((menu) => (
+                            <div key={menu.key}>
                                 <button
                                     className="w-full text-left py-2 border-b border-white/10 flex justify-between items-center"
                                     onClick={() => {
                                         setOpenDropdown(
-                                            openDropdown === (menu.key)
+                                            openDropdown === menu.key
                                                 ? null
-                                                : (menu.key)
+                                                : (menu.key || null)
                                         );
                                     }}
                                 >
@@ -499,12 +329,12 @@ export default function Navbar() {
 
                                     {menu.items && (
                                         <span className="text-lg">
-                                            {openDropdown === (menu.key ?? menu.title) ? "-" : "+"}
+                                            {openDropdown === menu.key ? "-" : "+"}
                                         </span>
                                     )}
                                 </button>
 
-                                {menu.items && openDropdown === (menu.key ?? menu.title) && (
+                                {menu.items && openDropdown === menu.key && (
                                     <div className="pl-4 pt-1 pb-2 space-y-1 text-md text-gray-300">
                                         {menu.items.map((sub, j) => (
                                             <button
@@ -515,7 +345,7 @@ export default function Navbar() {
                                                     setIsMobileOpen(false);
 
                                                     if (sub.goto) router.push(sub.goto);
-                                                    else if (sub.section) router.push(`/#${sub.section}`);
+                                                    else if (sub.section) scrollToSection(sub.section);
                                                 }}
                                             >
                                                 {sub.label}
@@ -526,7 +356,7 @@ export default function Navbar() {
                             </div>
                         ))}
 
-                        <div className="flex justify-center mt-6 gap-8 text-xl transition">
+                        <div className="flex justify-center mt-6 gap-8 text-xl transition pb-20">
                             <a href="#" className="hover:text-yellow-300"><FaInstagram /></a>
                             <a href="#" className="hover:text-yellow-300"><FaFacebook /></a>
                             <a href="mailto:example@gmail.com" className="hover:text-yellow-300"><SiGmail /></a>
@@ -537,45 +367,3 @@ export default function Navbar() {
         </>
     );
 }
-
-
-// {/* <div className="md:hidden bg-black/80 backdrop-blur-xl text-white px-6 py-4 space-y-3 animate-slideDown">
-//                         {mobileMenu.map((menu) => (
-//                             <div key={menu.key ?? menu.label}>
-
-//                                 {/* Parent button */}
-//                                 <button
-//                                     className="w-full text-left py-2 border-b border-white/10 flex justify-between items-center"
-//                                     onClick={() => toggleDropdown(menu.key ?? menu.label)}
-//                                 >
-//                                     {menu.label}
-//                                     {menu.items && (
-//                                         <span className="text-lg">
-//                                             {openDropdown === (menu.key || menu.label) ? "−" : "+"}
-//                                         </span>
-//                                     )}
-//                                 </button>
-
-//                                 {/* Sub items */}
-//                                 {menu.items && openDropdown === (menu.key ?? menu.label) && (
-//                                     <div className="pl-4 pt-1 pb-2 space-y-1 text-sm text-gray-300">
-//                                         {menu.items.map((sub, j) => (
-//                                             <button
-//                                                 key={j}
-//                                                 className="block w-full text-left py-1 hover:text-yellow-300"
-//                                             >
-//                                                 {sub}
-//                                             </button>
-//                                         ))}
-//                                     </div>
-//                                 )}
-//                             </div>
-//                         ))}
-
-//                         {/* SOCIAL ICONS MOBILE */}
-//                         <div className="flex gap-6 text-2xl pt-4">
-//                             <FaInstagram className="hover:text-yellow-300" />
-//                             <FaFacebook className="hover:text-yellow-300" />
-//                             <SiGmail className="hover:text-yellow-300" />
-//                         </div>
-//                     </div> */}

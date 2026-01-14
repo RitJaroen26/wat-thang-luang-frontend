@@ -37,6 +37,26 @@ export default function OrgStructurePage() {
                     />
                 </section>
             </section>
+
+            <section className="max-w-6xl mx-auto px-6 py-16 space-y-16">
+                <section className="space-y-4 text-center">
+                    <h2 className="text-3xl font-bold text-gray-900">
+                        โครงสร้างคณะกรรมการ "ยุวชนอาสา"
+                    </h2>
+                    <p className="text-gray-600 max-w-3xl mx-auto text-sm md:text-base">
+                        แสดงความบุคคลากรในคณะกรรมการยุวชนอาสา
+                    </p>
+                </section>
+
+                <section className="space-y-10 flex items-center justify-center">
+                    <Image
+                        src="/images/499268352_1407196473767407_3583222764149959580_n.jpg"
+                        width={1000}
+                        height={1000}
+                        alt="organization"
+                    />
+                </section>
+            </section>
         </main>
     );
 }
