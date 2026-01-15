@@ -5,6 +5,7 @@ import Introduction from "@/components/Introduction";
 import Maps from "@/components/Maps";
 import Navbar from "@/components/Navbar";
 import NewsSection from "@/components/NewsSection";
+import ScheduleSection from "@/components/ScheduleSection";
 import Image from "next/image";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       <ChatAsk />
       <Introduction />
       <NewsSection />
+      <ScheduleSection />
       <Maps />
     </div>
   );

@@ -1,88 +1,3 @@
-// "use client";
-
-// import Image from "next/image";
-
-// export default function Maps() {
-//     return (
-//         <main className="bg-[#f4f4f2] min-h-screen text-[#1D2340] pb-20">
-
-//             {/* ------------------ MAP SECTION ------------------ */}
-//             <section className="w-full relative">
-//                 <div className="w-full h-[350px] md:h-[450px] rounded-b-3xl overflow-hidden shadow-lg">
-//                     <iframe
-//                         src="https://maps.google.com/maps?q=wat%20thang%20luang&t=&z=15&ie=UTF8&iwloc=&output=embed"
-//                         className="w-full h-full border-0"
-//                         allowFullScreen
-//                         loading="lazy"
-//                     ></iframe>
-//                 </div>
-//             </section>
-
-//             {/* ------------------ INFO CARD ------------------ */}
-//             <section className="max-w-4xl mx-auto px-6 -mt-20">
-//                 <div className="
-//                     bg-white p-10 rounded-3xl shadow-2xl border border-gray-100 relative
-//                 ">
-//                     {/* Thai Pattern Overlay (optional) */}
-//                     <div className="absolute inset-0 bg-[url('/patterns/pattern_gold.png')] 
-//                         opacity-5 pointer-events-none rounded-3xl"></div>
-
-//                     {/* Header */}
-//                     <h2 className="text-3xl font-extrabold text-[#1D2340]">
-//                         ศูนย์ศึกษาพระพุทธศาสนาวันอาทิตย์ วัดทางหลวง
-//                     </h2>
-
-//                     <p className="text-gray-600 text-lg mt-3 leading-relaxed">
-//                         123 หมู่ที่ 5 ตำบลตัวอย่าง อำเภอตัวอย่าง จังหวัดตัวอย่าง
-//                         <br/>
-//                         รหัสไปรษณีย์ 12345
-//                     </p>
-
-//                     {/* DETAILS GRID */}
-//                     <div className="grid md:grid-cols-2 gap-10 mt-10">
-
-//                         {/* Column 1 */}
-//                         <div>
-//                             <h3 className="text-xl font-semibold text-[#B89B5F]">
-//                                 เวลาเปิดทำการ
-//                             </h3>
-//                             <p className="text-gray-700 mt-2">วันอาทิตย์: 08.00 – 17.00 น.</p>
-//                             <p className="text-gray-700">วันหยุดนักขัตฤกษ์: เปิดตามประกาศ</p>
-//                         </div>
-
-//                         {/* Column 2 */}
-//                         <div>
-//                             <h3 className="text-xl font-semibold text-[#B89B5F]">
-//                                 ช่องทางการติดต่อ
-//                             </h3>
-//                             <p className="text-gray-700 mt-2">โทร: 02-123-4567</p>
-//                             <p className="text-gray-700">อีเมล: info@buddhistcenter.or.th</p>
-//                             <p className="text-gray-700">Facebook: ศูนย์ศึกษาพระพุทธศาสนา</p>
-//                         </div>
-//                     </div>
-
-//                     {/* CTA BUTTON */}
-//                     <div className="mt-12 text-center">
-//                         <a
-//                             href="https://maps.app.goo.gl/xxxx"
-//                             target="_blank"
-//                             className="
-//                                 px-12 py-3 bg-[#B89B5F] text-white text-lg rounded-full 
-//                                 shadow-md hover:shadow-lg hover:bg-[#a0824e] 
-//                                 transition-all font-semibold
-//                             "
-//                         >
-//                             เปิดแผนที่นำทาง
-//                         </a>
-//                     </div>
-
-//                 </div>
-//             </section>
-
-//         </main>
-//     );
-// }
-
 "use client";
 
 import Image from "next/image";
@@ -91,7 +6,7 @@ import MapWithMarker from "./MapWithMarker";
 
 export default function Maps() {
     return (
-        <main className="bg-[#faf9f7] min-h-screen text-[#1D2340]">
+        <main className="bg-[#faf9f7] min-h-screen text-[#1D2340]" id="maps">
             <section className="max-w-5xl mx-auto px-6 pt-20 text-center">
                 <h1 className="text-4xl md:text-5xl font-extrabold text-[#1D2340] tracking-wide">
                     ติดต่อศูนย์ศึกษาพระพุทธศาสนา

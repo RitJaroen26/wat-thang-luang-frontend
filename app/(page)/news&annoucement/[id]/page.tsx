@@ -84,7 +84,7 @@ export default function NewsDetailPage() {
             <div className="min-h-screen bg-[#FDFBF7] font-sans pb-20">
                 
                 {/* --- 1. HERO BANNER SECTION --- */}
-                <div className="relative h-[350px] md:h-[450px] w-full bg-[#1D2340] overflow-hidden">
+                <div className="relative h-[550px] sm:h-[350px] md:h-[450px] w-full bg-[#1D2340] overflow-hidden">
                     {post.image_url ? (
                         <Image 
                             src={post.image_url} 

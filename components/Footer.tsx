@@ -6,7 +6,7 @@ import { SiGmail } from "react-icons/si";
 
 export default function Footer() {
     return (
-        <footer className="relative bg-[#0e1120] text-gray-300 pt-24 pb-12 overflow-hidden">
+        <footer className="relative bg-[#0e1120] text-gray-300 pt-24 pb-12 overflow-hidden" id="contact">
             <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-400/10 blur-[120px] rounded-full"></div>
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/10 blur-[130px] rounded-full"></div>
 

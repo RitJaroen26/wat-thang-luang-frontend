@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function AboutPage() {
     return (
         <main className="bg-gray-50 text-gray-800">
-            <section className="relative h-[380px] md:h-[180px] w-full">
+            <section className="relative h-[160px] md:h-[180px] w-full">
                 <Image
                     src="/images/LINE_ALBUM_21268_251203_11.jpg"
                     fill

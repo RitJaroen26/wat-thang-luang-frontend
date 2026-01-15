@@ -92,7 +92,7 @@ export default function VideoPage() {
                         </motion.div>
                     </Parallax>
 
-                    <section className="space-y-8 mt-30">
+                    {/* <section className="space-y-8 mt-30">
                         <Parallax speed={-5}>
                             <h2 className="text-xl sm:text-2xl font-semibold text-[#111] mb-1">
                                 วิดีทัศน์ทั้งหมด
@@ -165,7 +165,7 @@ export default function VideoPage() {
                         ">
                             ดูวิดีโอเพิ่มเติม
                         </button>
-                    </div>
+                    </div> */}
 
                 </section>
             </main>

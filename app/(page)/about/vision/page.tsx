@@ -7,7 +7,7 @@ export default function MandateVisionPage() {
         <main className="bg-gray-50 text-gray-800 min-h-screen">
 
             {/* HERO ---------------------------------------------------- */}
-            <section className="relative h-[360px] md:h-[180px] w-full">
+            <section className="relative h-[160px] md:h-[180px] w-full">
                 <Image
                     src="/images/LINE_ALBUM_21268_251203_11.jpg"
                     fill
