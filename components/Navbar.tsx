@@ -7,7 +7,6 @@ import { SiGmail } from "react-icons/si";
 import Image from "next/image";
 import { ChevronDown, ChevronUp, Menu, X } from "lucide-react";
 
-// Combine the types into a single interface with optional properties
 type MenuItem = {
     label: string;
     goto?: string;
@@ -16,8 +15,8 @@ type MenuItem = {
 
 type MobileMenu = {
     key?: string;
-    title?: string; // Add title as optional since you use it
-    label?: string; // Add label as optional for direct links
+    title?: string; 
+    label?: string; 
     action?: () => void;
     items?: MenuItem[];
 };
@@ -27,14 +26,12 @@ export default function Navbar() {
     const [isVisibled, setIsVisibled] = useState(true);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
-
     const lastScrollY = useRef(0);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const router = useRouter();
     const pathname = usePathname();
 
-    // Define the menu structure directly or use the type
     const menuStructure: MobileMenu[] = [
         {
             key: "about",
@@ -49,7 +46,7 @@ export default function Navbar() {
             key: "services",
             title: "บริการ",
             items: [
-                { label: "ตารางเรียน", section: "activities" },
+                { label: "ตารางเรียน", section: "schedule-section" },
                 { label: "คาเฟ่เด็กวัด", goto: "/services/cafe_dekwat" },
                 { label: "สมทบทุนการศึกษา", goto: "/services/donation" },
             ]
@@ -146,9 +143,9 @@ export default function Navbar() {
                     </div>
 
                     <div className="hidden sm:flex gap-3 text-[14px]">
-                        <button onClick={() => router.push(`${process.env.NEXT_PUBLIC_API_REG}`)} className="px-4 py-1.5 bg-white/10 rounded hover:bg-white/20 transition">รับสมัครนักเรียน</button>
-                        <button onClick={() => router.push("/login")} className="px-4 py-1.5 bg-white/10 rounded hover:bg-white/20 transition">ระบบปฏิทินกลาง</button>
-                        <span className="px-3 py-1.5 border border-white/20 rounded text-[10px]">TH</span>
+                        <button onClick={() => router.push(`${process.env.NEXT_PUBLIC_API_REG}`)} className="px-4 py-1.5 bg-white/10 rounded hover:bg-white/20 transition cursor-pointer">รับสมัครนักเรียน</button>
+                        {/* <button onClick={() => router.push("/login")} className="px-4 py-1.5 bg-white/10 rounded hover:bg-white/20 transition">ระบบปฏิทินกลาง</button> */}
+                        <button className="px-3 py-1.5 border border-white/20 rounded text-[10px] cursor-pointer">TH</button>
                     </div>
                 </div>
             </div>
@@ -249,9 +246,9 @@ export default function Navbar() {
                             <button onClick={() => router.push(`${process.env.NEXT_PUBLIC_API_REG}`)} className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg">
                                 ระบบรับสมัครนักเรียน
                             </button>
-                            <button onClick={() => router.push("/login")} className="w-full py-3 rounded-xl bg-white/10 text-white font-medium border border-white/10">
+                            {/* <button onClick={() => router.push("/login")} className="w-full py-3 rounded-xl bg-white/10 text-white font-medium border border-white/10">
                                 ระบบปฏิทินกลาง
-                            </button>
+                            </button> */}
                         </div>
 
                         <div className="flex justify-center gap-8 text-white/50 text-md">
