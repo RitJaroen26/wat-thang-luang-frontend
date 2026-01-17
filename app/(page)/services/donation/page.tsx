@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { 
-    Copy, CheckCircle2, Heart, GraduationCap, 
-    QrCode, AlertCircle, Building2, X, UploadCloud, Loader2 
+import {
+    Copy, CheckCircle2, Heart, GraduationCap,
+    QrCode, AlertCircle, Building2, X, UploadCloud, Loader2
 } from "lucide-react";
-import { api } from "@/libs/axios"; 
+import { api } from "@/libs/axios";
 import Swal from "sweetalert2";
 
 export default function DonationUser() {
@@ -15,12 +15,12 @@ export default function DonationUser() {
 
     // Form State
     const [formData, setFormData] = useState({
-        first_name: "", 
-        last_name: "", 
-        email: "", 
-        phone: "", 
-        amount: "", 
-        note: "", 
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        amount: "",
+        note: "",
         slip_image: null as File | null
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,7 +29,7 @@ export default function DonationUser() {
     const bankInfo = {
         bankName: "ธนาคารกรุงไทย",
         accountName: "ศูนย์การเรียนรู้ทางวัฒนธรรมวัดทางหลวง",
-        accountNumber: "108-0-94700-0", 
+        accountNumber: "108-0-94700-0",
         branch: "สาขานนทบุรี"
     };
 
@@ -42,33 +42,33 @@ export default function DonationUser() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        
+
         const data = new FormData();
         Object.entries(formData).forEach(([key, value]) => {
             if (value) data.append(key, value);
         });
 
         try {
-            await api.post('/api/public/donations', data); 
-            
-            Swal.fire({ 
-                icon: 'success', 
-                title: 'แจ้งโอนเงินเรียบร้อย', 
-                text: 'เจ้าหน้าที่จะตรวจสอบข้อมูลโดยเร็วที่สุด', 
+            await api.post('/api/public/donations', data);
+
+            Swal.fire({
+                icon: 'success',
+                title: 'แจ้งโอนเงินเรียบร้อย',
+                text: 'เจ้าหน้าที่จะตรวจสอบข้อมูลโดยเร็วที่สุด',
                 timer: 2000,
                 showConfirmButton: false
             });
-            
+
             // Reset form and close modal
             setFormData({ first_name: "", last_name: "", email: "", phone: "", amount: "", note: "", slip_image: null });
             setIsModalOpen(false);
 
         } catch (error) {
             console.error(error);
-            Swal.fire({ 
-                icon: 'error', 
-                title: 'เกิดข้อผิดพลาด', 
-                text: 'ไม่สามารถส่งข้อมูลได้ โปรดลองใหม่อีกครั้ง' 
+            Swal.fire({
+                icon: 'error',
+                title: 'เกิดข้อผิดพลาด',
+                text: 'ไม่สามารถส่งข้อมูลได้ โปรดลองใหม่อีกครั้ง'
             });
         } finally {
             setIsSubmitting(false);
@@ -77,7 +77,7 @@ export default function DonationUser() {
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-600 pb-10 md:pb-20">
-            
+
             {/* --- Hero Section --- */}
             <div className="bg-[#1D2340] text-white py-12 md:py-16 px-4 md:px-6 text-center relative overflow-hidden h-[450px] md:h-[500px] flex items-center justify-center">
                 <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/pattern-bg.png')] opacity-10"></div>
@@ -100,10 +100,10 @@ export default function DonationUser() {
 
                     {/* Left Column: Bank & Payment Info (7 cols) */}
                     <div className="lg:col-span-7 space-y-4 md:space-y-6">
-                        
+
                         {/* Bank Account Card */}
                         <div className="bg-white rounded-2xl md:rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
-                             <div className="bg-slate-50 p-4 md:p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div className="bg-slate-50 p-4 md:p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                                 <h3 className="font-bold text-base md:text-lg text-slate-800 flex items-center gap-2">
                                     <Building2 className="text-[#B89B5F] w-5 h-5 md:w-6 md:h-6 hidden md:block" /> ทุกการร่วมบุญสามารถลดหย่อนภาษีได้ ผ่านระบบสรรพากรโดยตรง ร่วมบุญผ่านบัญชีธนาคารกรุงไทย
                                 </h3>
@@ -113,7 +113,7 @@ export default function DonationUser() {
                                     <p className="text-xs md:text-sm text-slate-400 mb-1">ชื่อบัญชี</p>
                                     <p className="text-base md:text-lg font-bold text-slate-800 break-words leading-tight">{bankInfo.accountName}</p>
                                 </div>
-                                
+
                                 <div className="bg-slate-50 rounded-xl md:rounded-2xl p-4 md:p-6 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
                                     <div className="text-center sm:text-left">
                                         <p className="text-xs md:text-sm text-slate-400 mb-1">เลขที่บัญชี</p>
@@ -121,15 +121,14 @@ export default function DonationUser() {
                                             {bankInfo.accountNumber}
                                         </p>
                                     </div>
-                                    <button 
+                                    <button
                                         onClick={handleCopy}
-                                        className={`flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-2.5 rounded-full font-bold text-sm transition-all shadow-sm active:scale-95 ${
-                                            copied 
-                                            ? "bg-emerald-500 text-white" 
-                                            : "bg-white border border-slate-200 hover:border-[#B89B5F] hover:text-[#B89B5F]"
-                                        }`}
+                                        className={`flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-2.5 rounded-full font-bold text-sm transition-all shadow-sm active:scale-95 ${copied
+                                                ? "bg-emerald-500 text-white"
+                                                : "bg-white border border-slate-200 hover:border-[#B89B5F] hover:text-[#B89B5F]"
+                                            }`}
                                     >
-                                        {copied ? <CheckCircle2 size={16}/> : <Copy size={16}/>}
+                                        {copied ? <CheckCircle2 size={16} /> : <Copy size={16} />}
                                         {copied ? "คัดลอกแล้ว" : "คัดลอก"}
                                     </button>
                                 </div>
@@ -142,32 +141,23 @@ export default function DonationUser() {
                         </div>
 
                         {/* QR Code Card */}
-                        <div className="bg-[#1D2340] rounded-2xl md:rounded-3xl shadow-xl overflow-hidden text-white p-6 md:p-8 flex flex-col sm:flex-row items-center gap-6 md:gap-8">
-                             <div className="bg-white p-3 md:p-4 rounded-2xl shadow-inner w-40 sm:w-48 shrink-0">
-                                <div className="aspect-square bg-slate-200 relative rounded-lg overflow-hidden flex items-center justify-center text-slate-400">
-                                    <QrCode size={48} className="md:w-16 md:h-16" />
-                                </div>
-                            </div>
-                            <div className="flex-1 text-center sm:text-left space-y-2 md:space-y-3">
-                                <h3 className="text-lg md:text-xl font-bold text-[#B89B5F]">E-Donation / PromptPay</h3>
-                                <p className="text-slate-300 font-light text-xs md:text-sm leading-relaxed">
-                                    สามารถสแกน QR Code ผ่านแอปพลิเคชันธนาคารเพื่อบริจาคได้ทันที (ลดหย่อนภาษีได้ตามเงื่อนไขกรมสรรพากร)
-                                </p>
-                                <div className="pt-1 md:pt-2">
-                                    <span className="text-[10px] md:text-xs bg-white/10 px-3 py-1 rounded-full text-slate-300">
-                                        รองรับทุกธนาคาร
-                                    </span>
-                                </div>
-                            </div>
+                        <div className="h-130 overflow-hidden text-white flex flex-col justify-center sm:flex-row items-center gap-6 md:gap-8">
+                            <Image
+                                src={`${process.env.NEXT_PUBLIC_QR_CODE_DONATION_IMAGE}`}
+                                alt="qr_code_donation"
+                                width={400}
+                                height={300}
+                                className="rounded-2xl"
+                            />
                         </div>
                     </div>
 
                     {/* Right Column: Instructions & Contact (5 cols) */}
                     <div className="lg:col-span-5 space-y-4 md:space-y-6">
-                        
+
                         {/* Process Info */}
                         <div className="bg-white rounded-2xl md:rounded-3xl shadow-lg border border-slate-100 p-6 md:p-8">
-                             <h3 className="font-bold text-base md:text-lg text-slate-800 mb-6 flex items-center gap-2">
+                            <h3 className="font-bold text-base md:text-lg text-slate-800 mb-6 flex items-center gap-2">
                                 <CheckCircle2 className="text-[#B89B5F]" /> ขั้นตอนการแจ้งหลักฐาน
                             </h3>
                             <ul className="space-y-5 md:space-y-6 relative border-l-2 border-slate-100 ml-3 pl-6 md:pl-8">
@@ -191,7 +181,7 @@ export default function DonationUser() {
 
                         {/* Contact Buttons */}
                         <div className="grid grid-cols-1 gap-3">
-                            <button 
+                            <button
                                 onClick={() => setIsModalOpen(true)}
                                 className="flex items-center justify-center gap-3 p-3.5 md:p-4 rounded-xl md:rounded-2xl bg-[#1D2340] text-white font-bold text-sm md:text-base hover:bg-[#2a325a] transition-all shadow-md hover:shadow-lg hover:-translate-y-1 cursor-pointer active:scale-95"
                             >
@@ -199,16 +189,16 @@ export default function DonationUser() {
                                 ส่งสลิปผ่านระบบ
                             </button>
 
-                            <a 
+                            <a
                                 href="#" // Replace with actual Line Link
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center justify-center gap-3 p-3.5 md:p-4 rounded-xl md:rounded-2xl bg-[#06C755] text-white font-bold text-sm md:text-base hover:bg-[#05b54d] transition-all shadow-md hover:shadow-lg hover:-translate-y-1 active:scale-95"
                             >
-                                <div className="w-5 h-5 md:w-6 md:h-6 bg-white/20 rounded-full"></div> 
+                                <div className="w-5 h-5 md:w-6 md:h-6 bg-white/20 rounded-full"></div>
                                 ส่งสลิปผ่าน LINE
                             </a>
-                            <a 
+                            <a
                                 href="#" // Replace with actual Facebook Link
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -232,12 +222,12 @@ export default function DonationUser() {
 
                 {/* --- Impact Section --- */}
                 <div className="mt-12 md:mt-20 text-center max-w-4xl mx-auto px-4">
-                     <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-6 md:mb-8">เงินบริจาคของท่านไปไหน?</h3>
+                    <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-6 md:mb-8">เงินบริจาคของท่านไปไหน?</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
                         {[
-                            { icon: <GraduationCap size={24} className="md:w-7 md:h-7"/>, color: "indigo", title: "ทุนการศึกษา", desc: "มอบโอกาสให้นักเรียนที่ขาดแคลนทุนทรัพย์" },
-                            { icon: <Building2 size={24} className="md:w-7 md:h-7"/>, color: "orange", title: "พัฒนาอาคารสถานที่", desc: "ซ่อมแซมห้องเรียนและปรับปรุงภูมิทัศน์" },
-                            { icon: <Heart size={24} className="md:w-7 md:h-7"/>, color: "pink", title: "กิจกรรมส่งเสริมคุณธรรม", desc: "สนับสนุนค่ายพุทธบุตรและกิจกรรมวันสำคัญ" },
+                            { icon: <GraduationCap size={24} className="md:w-7 md:h-7" />, color: "indigo", title: "ทุนการศึกษา", desc: "มอบโอกาสให้นักเรียนที่ขาดแคลนทุนทรัพย์" },
+                            { icon: <Building2 size={24} className="md:w-7 md:h-7" />, color: "orange", title: "พัฒนาอาคารสถานที่", desc: "ซ่อมแซมห้องเรียนและปรับปรุงภูมิทัศน์" },
+                            { icon: <Heart size={24} className="md:w-7 md:h-7" />, color: "pink", title: "กิจกรรมส่งเสริมคุณธรรม", desc: "สนับสนุนค่ายพุทธบุตรและกิจกรรมวันสำคัญ" },
                         ].map((item, i) => (
                             <div key={i} className="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center gap-3 md:gap-4 hover:shadow-md transition-shadow">
                                 <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center bg-${item.color}-50 text-${item.color}-600`}>
@@ -254,20 +244,20 @@ export default function DonationUser() {
 
             {/* --- ✅ Modal Form Section --- */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-70 flex items-end sm:items-center justify-center p-0 sm:p-4">
+                <div className="fixed inset-0 z-100 flex items-end sm:items-center justify-center p-0 sm:p-4">
                     {/* Backdrop */}
-                    <div 
+                    <div
                         className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
                         onClick={() => setIsModalOpen(false)}
                     ></div>
 
                     {/* Modal Content */}
                     <div className="bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl w-full max-w-2xl relative z-50 animate-in slide-in-from-bottom-10 sm:zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto flex flex-col">
-                        
+
                         {/* Header */}
                         <div className="flex justify-between items-center p-5 md:p-6 border-b border-slate-100 sticky top-0 bg-white z-20">
                             <h3 className="text-lg md:text-xl font-bold text-slate-800">แจ้งหลักฐานการโอนเงิน</h3>
-                            <button 
+                            <button
                                 onClick={() => setIsModalOpen(false)}
                                 className="p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors text-slate-500"
                             >
@@ -280,29 +270,29 @@ export default function DonationUser() {
                             <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
                                 <div className="space-y-1.5 md:space-y-2">
                                     <label className="text-xs md:text-sm font-bold text-slate-700">ชื่อ <span className="text-red-500">*</span></label>
-                                    <input required type="text" className="w-full p-2.5 md:p-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#B89B5F] outline-none transition-all text-sm md:text-base" 
-                                        value={formData.first_name} onChange={e => setFormData({...formData, first_name: e.target.value})} placeholder="ชื่อจริง" />
+                                    <input required type="text" className="w-full p-2.5 md:p-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#B89B5F] outline-none transition-all text-sm md:text-base"
+                                        value={formData.first_name} onChange={e => setFormData({ ...formData, first_name: e.target.value })} placeholder="ชื่อจริง" />
                                 </div>
                                 <div className="space-y-1.5 md:space-y-2">
                                     <label className="text-xs md:text-sm font-bold text-slate-700">นามสกุล <span className="text-red-500">*</span></label>
-                                    <input required type="text" className="w-full p-2.5 md:p-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#B89B5F] outline-none transition-all text-sm md:text-base" 
-                                        value={formData.last_name} onChange={e => setFormData({...formData, last_name: e.target.value})} placeholder="นามสกุล" />
+                                    <input required type="text" className="w-full p-2.5 md:p-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#B89B5F] outline-none transition-all text-sm md:text-base"
+                                        value={formData.last_name} onChange={e => setFormData({ ...formData, last_name: e.target.value })} placeholder="นามสกุล" />
                                 </div>
                                 <div className="space-y-1.5 md:space-y-2">
                                     <label className="text-xs md:text-sm font-bold text-slate-700">เบอร์โทรศัพท์ <span className="text-red-500">*</span></label>
-                                    <input required type="tel" className="w-full p-2.5 md:p-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#B89B5F] outline-none transition-all text-sm md:text-base" 
-                                        value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} placeholder="08xxxxxxxx" />
+                                    <input required type="tel" className="w-full p-2.5 md:p-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#B89B5F] outline-none transition-all text-sm md:text-base"
+                                        value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} placeholder="08xxxxxxxx" />
                                 </div>
                                 <div className="space-y-1.5 md:space-y-2">
                                     <label className="text-xs md:text-sm font-bold text-slate-700">อีเมล (ถ้ามี)</label>
-                                    <input type="email" className="w-full p-2.5 md:p-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#B89B5F] outline-none transition-all text-sm md:text-base" 
-                                        value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="name@example.com" />
+                                    <input type="email" className="w-full p-2.5 md:p-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#B89B5F] outline-none transition-all text-sm md:text-base"
+                                        value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} placeholder="name@example.com" />
                                 </div>
                                 <div className="space-y-1.5 md:space-y-2 sm:col-span-2">
                                     <label className="text-xs md:text-sm font-bold text-slate-700">จำนวนเงินที่โอน (บาท) <span className="text-red-500">*</span></label>
                                     <div className="relative">
-                                        <input required type="number" min="1" className="w-full p-2.5 md:p-3 pl-4 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#B89B5F] outline-none text-base md:text-lg font-medium transition-all" 
-                                            value={formData.amount} onChange={e => setFormData({...formData, amount: e.target.value})} placeholder="0.00" />
+                                        <input required type="number" min="1" className="w-full p-2.5 md:p-3 pl-4 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#B89B5F] outline-none text-base md:text-lg font-medium transition-all"
+                                            value={formData.amount} onChange={e => setFormData({ ...formData, amount: e.target.value })} placeholder="0.00" />
                                         <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs md:text-sm font-bold">THB</span>
                                     </div>
                                 </div>
@@ -310,7 +300,7 @@ export default function DonationUser() {
                                     <label className="text-xs md:text-sm font-bold text-slate-700">หลักฐานการโอน (สลิป) <span className="text-red-500">*</span></label>
                                     <div className="relative border-2 border-dashed border-slate-300 rounded-xl p-6 md:p-8 text-center hover:bg-slate-50 hover:border-[#B89B5F] cursor-pointer transition-all bg-white group">
                                         <input required type="file" accept="image/*" className="absolute inset-0 opacity-0 cursor-pointer z-10"
-                                            onChange={e => e.target.files && setFormData({...formData, slip_image: e.target.files[0]})} />
+                                            onChange={e => e.target.files && setFormData({ ...formData, slip_image: e.target.files[0] })} />
                                         <div className="flex flex-col items-center gap-2 md:gap-3 text-slate-400 group-hover:text-[#B89B5F] transition-colors">
                                             <div className="p-2 md:p-3 bg-slate-100 rounded-full group-hover:bg-[#B89B5F]/10">
                                                 <UploadCloud size={24} className="md:w-8 md:h-8" />
@@ -318,7 +308,7 @@ export default function DonationUser() {
                                             <span className="text-xs md:text-sm font-medium truncate max-w-[200px] md:max-w-full">
                                                 {formData.slip_image ? (
                                                     <span className="text-emerald-600 font-bold flex items-center justify-center gap-2">
-                                                        <CheckCircle2 size={16}/> {formData.slip_image.name}
+                                                        <CheckCircle2 size={16} /> {formData.slip_image.name}
                                                     </span>
                                                 ) : "คลิกเพื่ออัปโหลดรูปภาพสลิป"}
                                             </span>
@@ -326,11 +316,11 @@ export default function DonationUser() {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div className="sm:col-span-2 mt-4">
-                                    <button 
-                                        type="submit" 
-                                        disabled={isSubmitting} 
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
                                         className="w-full py-3 md:py-4 bg-[#1D2340] text-white rounded-xl font-bold text-base md:text-lg hover:bg-[#2a325a] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed active:scale-95"
                                     >
                                         {isSubmitting ? (
