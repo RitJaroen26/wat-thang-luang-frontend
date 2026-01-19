@@ -43,7 +43,7 @@
 //         if (isOpen) loadOptions();
 //     }, [isOpen]);
 
-    
+
 
 //     const createNewSession = async () => {
 //         const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/chat/session/create`, {
@@ -199,6 +199,9 @@ export default function ChatAsk({ locale = "th" }) {
 
     // Initialize Session
     useEffect(() => {
+        localStorage.removeItem("chat_session_token");
+        setMessages([]);
+
         const token = localStorage.getItem("chat_session_token");
         if (!token) {
             createNewSession();
@@ -250,7 +253,7 @@ export default function ChatAsk({ locale = "th" }) {
                 rule_id: id,
                 lang: "th"
             });
-            
+
             // หน่วงเวลาเล็กน้อยเพื่อให้ดูเหมือนบอทกำลังคิด
             setTimeout(() => {
                 setMessages((prev) => [...prev, { sender: "bot", text: res.data.answer }]);
@@ -267,9 +270,8 @@ export default function ChatAsk({ locale = "th" }) {
             {/* Toggle Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`flex items-center justify-center rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 ${
-                    isOpen ? "w-12 h-12 bg-yellow-500 text-white" : "w-16 h-16 bg-[#212346] text-white"
-                }`}
+                className={`flex items-center justify-center rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 ${isOpen ? "w-12 h-12 bg-yellow-500 text-white" : "w-16 h-16 bg-[#212346] text-white"
+                    }`}
             >
                 {isOpen ? <IoClose size={28} /> : <IoChatbubbleEllipsesOutline size={32} />}
                 {!isOpen && (
@@ -282,9 +284,8 @@ export default function ChatAsk({ locale = "th" }) {
 
             {/* Chat Box Container */}
             <div
-                className={`absolute bottom-20 right-0 w-[90vw] sm:w-[380px] h-[70vh] max-h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col transition-all duration-300 origin-bottom-right transform ${
-                    isOpen ? "scale-100 opacity-100 translate-y-0" : "scale-90 opacity-0 translate-y-10 pointer-events-none"
-                }`}
+                className={`absolute bottom-20 right-0 w-[90vw] sm:w-[380px] h-[70vh] max-h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col transition-all duration-300 origin-bottom-right transform ${isOpen ? "scale-100 opacity-100 translate-y-0" : "scale-90 opacity-0 translate-y-10 pointer-events-none"
+                    }`}
             >
                 {/* Header */}
                 <div className="bg-[#212346] text-white px-5 py-4 rounded-t-2xl flex items-center gap-3">
@@ -292,15 +293,15 @@ export default function ChatAsk({ locale = "th" }) {
                         <RiRobot2Line size={24} />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold leading-tight">ฝ่ายสนับสนุนระบบ (AI)</h3>
+                        <h3 className="text-sm font-bold leading-tight">ถาม–ตอบ ศพอ.วัดทางหลวง</h3>
                         <p className="text-[10px] text-blue-100 flex items-center gap-1">
-                            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> ออนไลน์พร้อมให้บริการ
+                            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> ระบบตอบกลับอัตโนมัติ
                         </p>
                     </div>
                 </div>
 
                 {/* Messages Area */}
-                <div 
+                <div
                     ref={scrollRef}
                     className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50"
                 >
@@ -314,12 +315,34 @@ export default function ChatAsk({ locale = "th" }) {
 
                     {messages.map((msg, i) => (
                         <div key={i} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                            <div className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm shadow-sm ${
-                                msg.sender === "user" 
-                                ? "bg-[#212346] text-white rounded-br-none" 
-                                : "bg-white text-slate-700 border border-slate-200 rounded-bl-none"
-                            }`}>
-                                {msg.text}
+                            <div className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm shadow-sm ${msg.sender === "user"
+                                    ? "bg-[#212346] text-white rounded-br-none"
+                                    : "bg-white text-slate-700 border border-slate-200 rounded-bl-none"
+                                }`}>
+                                {/* {msg.text} */}
+                                <div className="whitespace-pre-line break-words overflow-hidden">
+                                    {msg.text.split(/(https?:\/\/[^\s]+)/g).map((part, index) => {
+                                        if (part.match(/https?:\/\/[^\s]+/)) {
+                                            return (
+                                                <a
+                                                    key={index}
+                                                    href={part}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-blue-600 underline font-medium break-all hover:text-blue-800 transition-colors"
+                                                >
+                                                    {part}
+                                                </a>
+                                            );
+                                        }
+                                        return part;
+                                    })}
+                                </div>
+
+                                {/* เวลา (ถ้ามีข้อมูล timestamp สามารถใส่เพิ่มได้) */}
+                                <p className={`text-[9px] mt-1.5 opacity-50 font-medium ${msg.sender === "user" ? "text-right" : "text-left"}`}>
+                                    {new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })}
+                                </p>
                             </div>
                         </div>
                     ))}
