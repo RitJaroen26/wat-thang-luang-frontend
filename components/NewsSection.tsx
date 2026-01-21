@@ -320,7 +320,7 @@ export default function NewsPage() {
                                                         <div className="relative h-56 overflow-hidden">
                                                             <Image src={item.image_url || "/images/placeholder.jpg"} fill alt={item.title} className="object-cover group-hover:scale-110 transition-transform duration-700" unoptimized={true} />
                                                             <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
-                                                            <span className="absolute top-4 left-4 text-white text-[10px] font-bold px-3 py-1 rounded-full bg-[#1D2340]/90 backdrop-blur-sm shadow-sm tracking-wide">{item.type === 'news' ? 'NEWS' : 'PR'}</span>
+                                                            <span className="absolute top-4 left-4 text-white text-[10px] font-bold px-3 py-1 rounded-full bg-[#1D2340]/90 backdrop-blur-sm shadow-sm tracking-wide">{item.type === 'news' ? 'ข่าวสาร' : 'ประชาสัมพันธ์'}</span>
                                                             {item.is_pinned && <span className="absolute top-4 right-4 bg-[#B89B5F] text-white p-1.5 rounded-full shadow-md">📌</span>}
                                                         </div>
                                                         <div className="p-6 flex flex-col flex-grow">
